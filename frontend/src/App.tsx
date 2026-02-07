@@ -5,7 +5,7 @@ import Toolbar from '@mui/material/Toolbar'
 import Typography from '@mui/material/Typography'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import theme from './theme'
-import logo from './assets/welsh-rugby-union-logo.png'
+import logo from './assets/newlogo.png'
 import InputLocationScreen from './screens/InputLocationScreen'
 import FindScreen from './screens/FindScreen'
 
