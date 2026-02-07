@@ -6,6 +6,7 @@ import Button from '@mui/material/Button'
 import Typography from '@mui/material/Typography'
 import SearchIcon from '@mui/icons-material/Search'
 import MyLocationIcon from '@mui/icons-material/MyLocation'
+import backgroundImage from '../assets/background.jpg'
 
 const UK_POSTCODE_REGEX = /^[A-Z]{1,2}\d[A-Z\d]?\s?\d[A-Z]{2}$/i
 
@@ -34,8 +35,33 @@ function InputLocationScreen() {
   }
 
   return (
-    <Box display="flex" justifyContent="center" alignItems="center" minHeight="100vh">
-      <Box display="flex" flexDirection="column" gap={2} width="100%" maxWidth={360}>
+    <Box
+      display="flex"
+      justifyContent="center"
+      alignItems="center"
+      minHeight="100vh"
+      sx={{
+        position: 'relative',
+        backgroundImage: `url(${backgroundImage})`,
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        backgroundRepeat: 'no-repeat',
+      }}
+    >
+      <Box 
+        display="flex" 
+        flexDirection="column" 
+        gap={2} 
+        width="100%" 
+        maxWidth={360} 
+        sx={{ 
+          position: 'relative', 
+          zIndex: 1,
+          bgcolor: 'rgb(240, 240, 240)',
+          p: 4,
+          borderRadius: 2,
+        }}
+      >
         <Typography variant="h4" textAlign="center" color="text.secondary" mb={2}>Input your location</Typography>
         <Box display="flex" gap={1} alignItems="flex-start">
           <TextField
