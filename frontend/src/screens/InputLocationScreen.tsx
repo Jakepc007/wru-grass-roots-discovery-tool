@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import Box from '@mui/material/Box'
 import TextField from '@mui/material/TextField'
 import Button from '@mui/material/Button'
@@ -9,6 +10,7 @@ import MyLocationIcon from '@mui/icons-material/MyLocation'
 const UK_POSTCODE_REGEX = /^[A-Z]{1,2}\d[A-Z\d]?\s?\d[A-Z]{2}$/i
 
 function InputLocationScreen() {
+  const navigate = useNavigate()
   const [postcode, setPostcode] = useState('')
   const [error, setError] = useState('')
 
@@ -26,7 +28,9 @@ function InputLocationScreen() {
   }
 
   const handleSearch = () => {
-    validate()
+    if (validate()) {
+      navigate(`/find?postcode=${encodeURIComponent(postcode.trim())}`)
+    }
   }
 
   return (
