@@ -5,7 +5,7 @@ import Toolbar from '@mui/material/Toolbar'
 import Typography from '@mui/material/Typography'
 import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
-import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import { BrowserRouter, Routes, Route, Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import theme from './theme'
 import logo from './assets/newlogo.png'
@@ -49,8 +49,10 @@ function App() {
       <BrowserRouter>
         <AppBar position="static" elevation={0} sx={{ borderBottom: '3px solid rgb(209, 138, 0)' }}>
           <Toolbar>
-            <img src={logo} alt="WRU logo" style={{ height: 40, marginRight: 12 }} />
-            <Typography variant="h6" sx={{ flexGrow: 1 }}>{t('appTitle')}</Typography>
+            <Link to="/" style={{ display: 'flex', alignItems: 'center', textDecoration: 'none', color: 'inherit', flexGrow: 1 }}>
+              <img src={logo} alt="WRU logo" style={{ height: 52, marginRight: 12 }} />
+              <Typography variant="h6">{t('appTitle')}</Typography>
+            </Link>
             <Box>
               <LanguageSwitcher />
             </Box>

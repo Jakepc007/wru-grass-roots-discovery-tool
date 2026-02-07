@@ -55,9 +55,11 @@ function InputLocationScreen() {
         width="100%" 
         maxWidth={360} 
         sx={{ 
-          position: 'relative', 
+          position: 'relative',
           zIndex: 1,
+          mt: -8,
           bgcolor: 'rgb(240, 240, 240)',
+          border: '3px solid rgb(238, 53, 36)',
           p: 4,
           borderRadius: 2,
         }}
