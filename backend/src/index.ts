@@ -1,10 +1,12 @@
 import express from "express";
+import cors from "cors";
 import { getConnection } from "./db";
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 const TEAM_SUFFIX = "_team1";
 
+app.use(cors());
 app.use(express.json());
 
 // Health check
@@ -86,6 +88,68 @@ app.get("/team-templates", async (_req, res) => {
   try {
     const pool = await getConnection();
     const result = await pool.request().query(`SELECT * FROM [dbo].[TeamTemplate${TEAM_SUFFIX}]`);
+    res.json(result.recordset);
+  } catch (error) {
+    res.status(500).json({ error: String(error) });
+  }
+});
+
+// Teams by organisation
+app.get("/organisations/:id/teams", async (req, res) => {
+  try {
+    const { id } = req.params;
+    const pool = await getConnection();
+    const result = await pool.request()
+      .input("orgId", parseInt(id))
+      .query(`
+        SELECT
+          tt.Name as TeamName,
+          o.Name as OrganisationName,
+          o.Id as OrganisationId,
+          o.Latitude,
+          o.Longitude,
+          tt.MinAge,
+          tt.MaxAge,
+          s.Value as Sex
+        FROM Team${TEAM_SUFFIX} t
+        JOIN TeamTemplate${TEAM_SUFFIX} tt ON t.TeamTemplateId = tt.Id
+        JOIN Organisation${TEAM_SUFFIX} o ON t.OrganisationId = o.Id
+        LEFT JOIN Sex${TEAM_SUFFIX} s ON t.SexId = s.Id
+        WHERE o.Id = @orgId
+      `);
+    res.json(result.recordset);
+  } catch (error) {
+    res.status(500).json({ error: String(error) });
+  }
+});
+
+// Teams near location (within map bounds)
+app.get("/teams/nearby", async (req, res) => {
+  try {
+    const { minLat, maxLat, minLng, maxLng } = req.query;
+    const pool = await getConnection();
+    const result = await pool.request()
+      .input("minLat", parseFloat(minLat as string))
+      .input("maxLat", parseFloat(maxLat as string))
+      .input("minLng", parseFloat(minLng as string))
+      .input("maxLng", parseFloat(maxLng as string))
+      .query(`
+        SELECT
+          tt.Name as TeamName,
+          o.Name as OrganisationName,
+          o.Id as OrganisationId,
+          o.Latitude,
+          o.Longitude,
+          tt.MinAge,
+          tt.MaxAge,
+          s.Value as Sex
+        FROM Team${TEAM_SUFFIX} t
+        JOIN TeamTemplate${TEAM_SUFFIX} tt ON t.TeamTemplateId = tt.Id
+        JOIN Organisation${TEAM_SUFFIX} o ON t.OrganisationId = o.Id
+        LEFT JOIN Sex${TEAM_SUFFIX} s ON t.SexId = s.Id
+        WHERE o.Latitude BETWEEN @minLat AND @maxLat
+          AND o.Longitude BETWEEN @minLng AND @maxLng
+      `);
     res.json(result.recordset);
   } catch (error) {
     res.status(500).json({ error: String(error) });
