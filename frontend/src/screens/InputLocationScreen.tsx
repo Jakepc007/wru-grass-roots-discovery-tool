@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
 import Box from '@mui/material/Box'
 import TextField from '@mui/material/TextField'
 import Button from '@mui/material/Button'
@@ -12,17 +13,18 @@ const UK_POSTCODE_REGEX = /^[A-Z]{1,2}\d[A-Z\d]?\s?\d[A-Z]{2}$/i
 
 function InputLocationScreen() {
   const navigate = useNavigate()
+  const { t } = useTranslation()
   const [postcode, setPostcode] = useState('')
   const [error, setError] = useState('')
   const [locating, setLocating] = useState(false)
 
   const validate = () => {
     if (!postcode.trim()) {
-      setError('Postcode is required')
+      setError(t('postcodeRequired'))
       return false
     }
     if (!UK_POSTCODE_REGEX.test(postcode.trim())) {
-      setError('Enter a valid UK postcode')
+      setError(t('enterValidPostcode'))
       return false
     }
     setError('')
@@ -37,7 +39,7 @@ function InputLocationScreen() {
 
   const handleUseCurrentLocation = () => {
     if (!navigator.geolocation) {
-      setError('Geolocation is not supported by your browser')
+      setError(t('geolocationNotSupported'))
       return
     }
     setLocating(true)
@@ -52,16 +54,16 @@ function InputLocationScreen() {
             const foundPostcode = data.result[0].postcode
             navigate(`/find?postcode=${encodeURIComponent(foundPostcode)}`)
           } else {
-            setError('Could not find a postcode for your location')
+            setError(t('couldNotFindPostcode'))
           }
         } catch {
-          setError('Failed to look up postcode for your location')
+          setError(t('failedToLookupPostcode'))
         } finally {
           setLocating(false)
         }
       },
       () => {
-        setError('Unable to retrieve your location')
+        setError(t('unableToRetrieveLocation'))
         setLocating(false)
       }
     )
@@ -98,27 +100,27 @@ function InputLocationScreen() {
           borderRadius: 2,
         }}
       >
-        <Typography variant="h4" textAlign="center" color="text.secondary" mb={2}>Input your location</Typography>
+        <Typography variant="h4" textAlign="center" color="text.secondary" mb={2}>{t('inputYourLocation')}</Typography>
         <Box display="flex" gap={1} alignItems="flex-start">
           <TextField
-            label="Postcode"
+            label={t('postcode')}
             value={postcode}
             onChange={(e) => { setPostcode(e.target.value); setError('') }}
-            placeholder="Enter postcode"
+            placeholder={t('enterPostcode')}
             error={!!error}
             helperText={error}
             onKeyDown={(e) => { if (e.key === 'Enter') handleSearch() }}
             fullWidth
           />
-          <Button variant="outlined" aria-label="search" onClick={handleSearch} sx={{ height: 56, '&:hover': { borderColor: 'rgb(209, 138, 0)' }, '&:focus': { outline: 'none' } }}>
+          <Button variant="outlined" aria-label={t('search')} onClick={handleSearch} sx={{ height: 56, '&:hover': { borderColor: 'rgb(209, 138, 0)' }, '&:focus': { outline: 'none' } }}>
             <SearchIcon />
           </Button>
         </Box>
         <Typography variant="body2" color="text.secondary" textAlign="center">
-          or
+          {t('or')}
         </Typography>
         <Button variant="outlined" startIcon={<MyLocationIcon />} onClick={handleUseCurrentLocation} disabled={locating} sx={{ '&:hover': { borderColor: 'rgb(209, 138, 0)' }, '&:focus': { outline: 'none' } }}>
-          {locating ? 'Locating...' : 'Use current location'}
+          {locating ? t('locating') : t('useCurrentLocation')}
         </Button>
       </Box>
     </Box>

@@ -7,6 +7,21 @@ const resources = {
       // App
       appTitle: 'WRU Grassroots',
 
+      // Input Location Screen
+      inputYourLocation: 'Input your location',
+      postcode: 'Postcode',
+      enterPostcode: 'Enter postcode',
+      postcodeRequired: 'Postcode is required',
+      enterValidPostcode: 'Enter a valid UK postcode',
+      geolocationNotSupported: 'Geolocation is not supported by your browser',
+      couldNotFindPostcode: 'Could not find a postcode for your location',
+      failedToLookupPostcode: 'Failed to look up postcode for your location',
+      unableToRetrieveLocation: 'Unable to retrieve your location',
+      or: 'or',
+      useCurrentLocation: 'Use current location',
+      locating: 'Locating...',
+      search: 'Search',
+
       // Find Screen
       nearbyOrganisations: 'Nearby Organisations',
       clubsInView: '{{count}} club in view',
@@ -40,6 +55,21 @@ const resources = {
     translation: {
       // App
       appTitle: 'Rygbi Cymru Gwreiddiau',
+
+      // Input Location Screen
+      inputYourLocation: 'Rhowch eich lleoliad',
+      postcode: 'Cod post',
+      enterPostcode: 'Rhowch god post',
+      postcodeRequired: 'Mae angen cod post',
+      enterValidPostcode: 'Rhowch god post DU dilys',
+      geolocationNotSupported: 'Nid yw daearleoli yn cael ei gefnogi gan eich porwr',
+      couldNotFindPostcode: 'Methu dod o hyd i god post ar gyfer eich lleoliad',
+      failedToLookupPostcode: 'Methu edrych i fyny cod post ar gyfer eich lleoliad',
+      unableToRetrieveLocation: 'Methu adfer eich lleoliad',
+      or: 'neu',
+      useCurrentLocation: 'Defnyddio lleoliad cyfredol',
+      locating: 'Yn lleoli...',
+      search: 'Chwilio',
 
       // Find Screen
       nearbyOrganisations: 'Timau Cyfagos',
