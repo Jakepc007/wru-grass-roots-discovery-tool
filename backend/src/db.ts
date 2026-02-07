@@ -1,7 +1,8 @@
 import sql from "mssql";
 import dotenv from "dotenv";
+import path from "path";
 
-dotenv.config();
+dotenv.config({ path: path.resolve(__dirname, "../.env") });
 
 const config: sql.config = {
   server: process.env.DB_HOST!,
