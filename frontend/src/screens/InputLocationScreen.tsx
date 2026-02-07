@@ -17,7 +17,7 @@ function InputLocationScreen() {
           placeholder="Enter postcode"
           fullWidth
         />
-        <Button variant="outlined" startIcon={<MyLocationIcon />}>
+        <Button variant="outlined" startIcon={<MyLocationIcon />} sx={{ '&:hover': { borderColor: 'rgb(209, 138, 0)' }, '&:focus': { outline: 'none' } }}>
           Use current location
         </Button>
       </Box>
