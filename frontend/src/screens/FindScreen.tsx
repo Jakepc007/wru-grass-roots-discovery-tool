@@ -64,6 +64,7 @@ function FindScreen() {
   const { t } = useTranslation()
   const [organisations, setOrganisations] = useState<Organisation[]>([])
   const [visibleOrgs, setVisibleOrgs] = useState<Organisation[]>([])
+  const [mapCenter, setMapCenter] = useState<[number, number]>([51.85, -3.5])
   const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null)
 
   useEffect(() => {
@@ -72,6 +73,19 @@ function FindScreen() {
       .then((data) => setOrganisations(Array.isArray(data) ? data : []))
       .catch((err) => console.error('Failed to fetch organisations:', err))
   }, [])
+
+  useEffect(() => {
+    if (postcode) {
+      fetch(`https://api.postcodes.io/postcodes/${encodeURIComponent(postcode)}`)
+        .then((res) => res.json())
+        .then((data) => {
+          if (data.result) {
+            setMapCenter([data.result.latitude, data.result.longitude])
+          }
+        })
+        .catch((err) => console.error('Failed to geocode postcode:', err))
+    }
+  }, [postcode])
 
   const handleBoundsChange = useCallback((bounds: L.LatLngBounds) => {
     if (debounceRef.current) {
@@ -110,9 +124,10 @@ function FindScreen() {
       <Box sx={{ display: 'flex', flex: 1, overflow: 'hidden' }}>
       <Box sx={{ flex: 1 }}>
         <MapContainer
-          center={[51.85, -3.5]}
-          zoom={10}
+          center={mapCenter}
+          zoom={13}
           style={{ height: '100%', width: '100%' }}
+          key={`${mapCenter[0]}-${mapCenter[1]}`}
         >
           <TileLayer
             attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
