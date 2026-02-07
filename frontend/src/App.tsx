@@ -51,7 +51,7 @@ function App() {
         <AppBar position="static" elevation={0} sx={{ borderBottom: '3px solid rgb(209, 138, 0)' }}>
           <Toolbar>
             <Link to="/" style={{ display: 'flex', alignItems: 'center', textDecoration: 'none', color: 'inherit', flexGrow: 1 }}>
-              <img src={logo} alt="WRU logo" style={{ height: 68, marginRight: 12 }} />
+              <img src={logo} alt="WRU logo" style={{ height: 80, marginRight: 12 }} />
               <Typography variant="h6">{t('appTitle')}</Typography>
             </Link>
             <Box>
