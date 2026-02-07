@@ -111,7 +111,7 @@ function FindScreen() {
       <Box sx={{ flex: 1 }}>
         <MapContainer
           center={[51.85, -3.5]}
-          zoom={8}
+          zoom={10}
           style={{ height: '100%', width: '100%' }}
         >
           <TileLayer
