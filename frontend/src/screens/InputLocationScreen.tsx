@@ -14,6 +14,7 @@ function InputLocationScreen() {
   const navigate = useNavigate()
   const [postcode, setPostcode] = useState('')
   const [error, setError] = useState('')
+  const [locating, setLocating] = useState(false)
 
   const validate = () => {
     if (!postcode.trim()) {
@@ -32,6 +33,38 @@ function InputLocationScreen() {
     if (validate()) {
       navigate(`/find?postcode=${encodeURIComponent(postcode.trim())}`)
     }
+  }
+
+  const handleUseCurrentLocation = () => {
+    if (!navigator.geolocation) {
+      setError('Geolocation is not supported by your browser')
+      return
+    }
+    setLocating(true)
+    setError('')
+    navigator.geolocation.getCurrentPosition(
+      async (position) => {
+        try {
+          const { latitude, longitude } = position.coords
+          const res = await fetch(`https://api.postcodes.io/postcodes?lon=${longitude}&lat=${latitude}`)
+          const data = await res.json()
+          if (data.result && data.result.length > 0) {
+            const foundPostcode = data.result[0].postcode
+            navigate(`/find?postcode=${encodeURIComponent(foundPostcode)}`)
+          } else {
+            setError('Could not find a postcode for your location')
+          }
+        } catch {
+          setError('Failed to look up postcode for your location')
+        } finally {
+          setLocating(false)
+        }
+      },
+      () => {
+        setError('Unable to retrieve your location')
+        setLocating(false)
+      }
+    )
   }
 
   return (
@@ -84,8 +117,8 @@ function InputLocationScreen() {
         <Typography variant="body2" color="text.secondary" textAlign="center">
           or
         </Typography>
-        <Button variant="outlined" startIcon={<MyLocationIcon />} sx={{ '&:hover': { borderColor: 'rgb(209, 138, 0)' }, '&:focus': { outline: 'none' } }}>
-          Use current location
+        <Button variant="outlined" startIcon={<MyLocationIcon />} onClick={handleUseCurrentLocation} disabled={locating} sx={{ '&:hover': { borderColor: 'rgb(209, 138, 0)' }, '&:focus': { outline: 'none' } }}>
+          {locating ? 'Locating...' : 'Use current location'}
         </Button>
       </Box>
     </Box>
