@@ -60,7 +60,8 @@ function InputLocationScreen() {
           mt: -8,
           bgcolor: 'rgb(240, 240, 240)',
           border: '3px solid rgb(238, 53, 36)',
-          p: 4,
+          px: 4,
+          py: 2,
           borderRadius: 2,
         }}
       >

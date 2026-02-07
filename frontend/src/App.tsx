@@ -8,7 +8,7 @@ import Button from '@mui/material/Button'
 import { BrowserRouter, Routes, Route, Link } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import theme from './theme'
-import logo from './assets/newlogo.png'
+import logo from './assets/finallogo-removebg-preview.png'
 import InputLocationScreen from './screens/InputLocationScreen'
 import FindScreen from './screens/FindScreen'
 import OrganizationScreen from './screens/OrganizationScreen'
@@ -50,7 +50,7 @@ function App() {
         <AppBar position="static" elevation={0} sx={{ borderBottom: '3px solid rgb(209, 138, 0)' }}>
           <Toolbar>
             <Link to="/" style={{ display: 'flex', alignItems: 'center', textDecoration: 'none', color: 'inherit', flexGrow: 1 }}>
-              <img src={logo} alt="WRU logo" style={{ height: 52, marginRight: 12 }} />
+              <img src={logo} alt="WRU logo" style={{ height: 68, marginRight: 12 }} />
               <Typography variant="h6">{t('appTitle')}</Typography>
             </Link>
             <Box>
