@@ -32,7 +32,7 @@ function InputLocationScreen() {
   return (
     <Box display="flex" justifyContent="center" alignItems="center" minHeight="100vh">
       <Box display="flex" flexDirection="column" gap={2} width="100%" maxWidth={360}>
-        <Typography variant="h4" textAlign="center" color="text.secondary">Input your location</Typography>
+        <Typography variant="h4" textAlign="center" color="text.secondary" mb={2}>Input your location</Typography>
         <Box display="flex" gap={1} alignItems="flex-start">
           <TextField
             label="Postcode"
