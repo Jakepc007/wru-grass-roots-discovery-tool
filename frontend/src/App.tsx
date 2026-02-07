@@ -17,7 +17,7 @@ function App() {
         <AppBar position="static" elevation={0} sx={{ borderBottom: '3px solid rgb(209, 138, 0)' }}>
           <Toolbar>
             <img src={logo} alt="WRU logo" style={{ height: 40, marginRight: 12 }} />
-            <Typography variant="h6">WRU Grassroots</Typography>
+            <Typography variant="h6">WRU Grassroots Discovery</Typography>
           </Toolbar>
         </AppBar>
         <Routes>

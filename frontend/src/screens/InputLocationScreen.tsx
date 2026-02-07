@@ -33,7 +33,7 @@ function InputLocationScreen() {
     <Box display="flex" justifyContent="center" alignItems="center" minHeight="100vh">
       <Box display="flex" flexDirection="column" gap={2} width="100%" maxWidth={360}>
         <Typography variant="h4" textAlign="center" color="text.secondary">Input your location</Typography>
-        <Box display="flex" gap={1} alignItems="stretch">
+        <Box display="flex" gap={1} alignItems="flex-start">
           <TextField
             label="Postcode"
             value={postcode}
@@ -44,7 +44,7 @@ function InputLocationScreen() {
             onKeyDown={(e) => { if (e.key === 'Enter') handleSearch() }}
             fullWidth
           />
-          <Button variant="outlined" aria-label="search" onClick={handleSearch} sx={{ '&:hover': { borderColor: 'rgb(209, 138, 0)' }, '&:focus': { outline: 'none' } }}>
+          <Button variant="outlined" aria-label="search" onClick={handleSearch} sx={{ height: 56, '&:hover': { borderColor: 'rgb(209, 138, 0)' }, '&:focus': { outline: 'none' } }}>
             <SearchIcon />
           </Button>
         </Box>
