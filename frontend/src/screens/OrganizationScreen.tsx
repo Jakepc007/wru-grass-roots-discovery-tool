@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import Box from '@mui/material/Box'
@@ -6,12 +6,17 @@ import Paper from '@mui/material/Paper'
 import Typography from '@mui/material/Typography'
 import IconButton from '@mui/material/IconButton'
 import ArrowBackIcon from '@mui/icons-material/ArrowBack'
-import Chip from '@mui/material/Chip'
+import Tooltip from '@mui/material/Tooltip'
 import CircularProgress from '@mui/material/CircularProgress'
 import StarIcon from '@mui/icons-material/Star'
 import StarOutlineIcon from '@mui/icons-material/StarOutline'
 import Button from '@mui/material/Button'
 import PlayArrowIcon from '@mui/icons-material/PlayArrow'
+import FemaleRoundedIcon from '@mui/icons-material/FemaleRounded'
+import MaleRoundedIcon from '@mui/icons-material/MaleRounded'
+import Diversity3RoundedIcon from '@mui/icons-material/Diversity3Rounded'
+import ElderlyWomanRoundedIcon from '@mui/icons-material/ElderlyWomanRounded'
+import LooksRoundedIcon from '@mui/icons-material/LooksRounded'
 
 interface Team {
   TeamName: string
@@ -125,12 +130,20 @@ function OrganizationScreen() {
     inclusive: '#c2185b',
   }
 
+  const badgeIcons: Record<string, React.ReactElement> = {
+    women: <FemaleRoundedIcon sx={{ fontSize: 16, color: 'white' }} />,
+    men: <MaleRoundedIcon sx={{ fontSize: 16, color: 'white' }} />,
+    mixed: <Diversity3RoundedIcon sx={{ fontSize: 16, color: 'white' }} />,
+    senior: <ElderlyWomanRoundedIcon sx={{ fontSize: 16, color: 'white' }} />,
+    inclusive: <LooksRoundedIcon sx={{ fontSize: 16, color: 'white' }} />,
+  }
+
   const badgeLabels: Record<string, string> = {
-    women: "Women's",
-    men: "Men's",
-    mixed: 'Mixed',
-    senior: 'Senior',
-    inclusive: 'Inclusive',
+    women: "Women's Teams",
+    men: "Men's Teams",
+    mixed: 'Mixed Teams',
+    senior: 'Senior Teams',
+    inclusive: 'Inclusive Teams',
   }
 
   const badges = getBadges()
@@ -196,17 +209,22 @@ function OrganizationScreen() {
               }}
             >
               {badges.map((badge) => (
-                <Chip
-                  key={badge}
-                  label={badgeLabels[badge]}
-                  size="small"
-                  sx={{
-                    backgroundColor: badgeColors[badge],
-                    color: 'white',
-                    fontWeight: 500,
-                    fontSize: '0.7rem',
-                  }}
-                />
+                <Tooltip key={badge} title={badgeLabels[badge]} arrow>
+                  <Box
+                    sx={{
+                      width: 32,
+                      height: 32,
+                      borderRadius: '50%',
+                      backgroundColor: badgeColors[badge],
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      cursor: 'pointer',
+                    }}
+                  >
+                    {badgeIcons[badge]}
+                  </Box>
+                </Tooltip>
               ))}
             </Box>
           )}
@@ -274,7 +292,7 @@ function OrganizationScreen() {
                 },
               }}
             >
-              Play Now
+              {t('playNow')}
             </Button>
           </Box>
         )}

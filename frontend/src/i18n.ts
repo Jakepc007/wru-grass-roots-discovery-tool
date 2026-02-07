@@ -20,6 +20,7 @@ const resources = {
       noTeamsFound: 'No teams found',
       noTeamsRegistered: 'This organisation has no teams registered',
       back: 'Back',
+      playNow: 'Play Now',
 
       // Team details
       ages: 'Ages {{min}}-{{max}}',
@@ -53,6 +54,7 @@ const resources = {
       noTeamsFound: 'Dim timau wedi\'u canfod',
       noTeamsRegistered: 'Nid oes gan y sefydliad hwn dimau cofrestredig',
       back: 'Yn ôl',
+      playNow: 'Chwarae Nawr',
 
       // Team details
       ages: 'Oedrannau {{min}}-{{max}}',
