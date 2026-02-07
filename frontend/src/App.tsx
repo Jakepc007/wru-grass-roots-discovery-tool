@@ -12,6 +12,7 @@ import logo from './assets/newlogo.png'
 import InputLocationScreen from './screens/InputLocationScreen'
 import FindScreen from './screens/FindScreen'
 import OrganizationScreen from './screens/OrganizationScreen'
+import PlayScreen from './screens/PlayScreen'
 
 function LanguageSwitcher() {
   const { i18n } = useTranslation()
@@ -59,6 +60,7 @@ function App() {
         <Routes>
           <Route path="/" element={<InputLocationScreen />} />
           <Route path="/find" element={<FindScreen />} />
+          <Route path="/play/:id" element={<PlayScreen />} />
           <Route path="/organization/:id" element={<OrganizationScreen />} />
         </Routes>
       </BrowserRouter>
