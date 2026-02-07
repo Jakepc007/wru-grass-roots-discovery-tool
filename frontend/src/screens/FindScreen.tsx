@@ -1,12 +1,14 @@
 import { useEffect, useState, useCallback, useRef } from 'react'
 import { MapContainer, TileLayer, Marker, Popup, useMapEvents } from 'react-leaflet'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useSearchParams } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import L from 'leaflet'
 import 'leaflet/dist/leaflet.css'
 import Box from '@mui/material/Box'
+import Button from '@mui/material/Button'
 import Paper from '@mui/material/Paper'
 import Typography from '@mui/material/Typography'
+import ArrowBackIcon from '@mui/icons-material/ArrowBack'
 import List from '@mui/material/List'
 import ListItemButton from '@mui/material/ListItemButton'
 import ListItemText from '@mui/material/ListItemText'
@@ -57,6 +59,8 @@ function MapEvents({ onBoundsChange }: { onBoundsChange: (bounds: L.LatLngBounds
 
 function FindScreen() {
   const navigate = useNavigate()
+  const [searchParams] = useSearchParams()
+  const postcode = searchParams.get('postcode') || ''
   const { t } = useTranslation()
   const [organisations, setOrganisations] = useState<Organisation[]>([])
   const [visibleOrgs, setVisibleOrgs] = useState<Organisation[]>([])
@@ -92,7 +96,18 @@ function FindScreen() {
   )
 
   return (
-    <Box sx={{ display: 'flex', height: 'calc(100vh - 64px)', width: '100%' }}>
+    <Box sx={{ display: 'flex', flexDirection: 'column', height: 'calc(100vh - 64px)', width: '100%' }}>
+      <Box sx={{ p: 1, borderBottom: '1px solid', borderColor: 'divider', display: 'flex', alignItems: 'center' }}>
+        <Button startIcon={<ArrowBackIcon />} onClick={() => navigate('/')} size="small">
+          {t('back', 'Back')}
+        </Button>
+        {postcode && (
+          <Typography variant="subtitle1" sx={{ flex: 1, textAlign: 'center', fontWeight: 'bold', mr: 10 }}>
+            {postcode.toUpperCase()}
+          </Typography>
+        )}
+      </Box>
+      <Box sx={{ display: 'flex', flex: 1, overflow: 'hidden' }}>
       <Box sx={{ flex: 1 }}>
         <MapContainer
           center={[51.85, -3.5]}
@@ -155,6 +170,7 @@ function FindScreen() {
           )}
         </List>
       </Paper>
+      </Box>
     </Box>
   )
 }
