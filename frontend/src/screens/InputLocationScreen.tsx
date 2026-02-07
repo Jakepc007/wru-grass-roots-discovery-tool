@@ -6,8 +6,28 @@ import Typography from '@mui/material/Typography'
 import SearchIcon from '@mui/icons-material/Search'
 import MyLocationIcon from '@mui/icons-material/MyLocation'
 
+const UK_POSTCODE_REGEX = /^[A-Z]{1,2}\d[A-Z\d]?\s?\d[A-Z]{2}$/i
+
 function InputLocationScreen() {
   const [postcode, setPostcode] = useState('')
+  const [error, setError] = useState('')
+
+  const validate = () => {
+    if (!postcode.trim()) {
+      setError('Postcode is required')
+      return false
+    }
+    if (!UK_POSTCODE_REGEX.test(postcode.trim())) {
+      setError('Enter a valid UK postcode')
+      return false
+    }
+    setError('')
+    return true
+  }
+
+  const handleSearch = () => {
+    validate()
+  }
 
   return (
     <Box display="flex" justifyContent="center" alignItems="center" minHeight="100vh">
@@ -17,11 +37,14 @@ function InputLocationScreen() {
           <TextField
             label="Postcode"
             value={postcode}
-            onChange={(e) => setPostcode(e.target.value)}
+            onChange={(e) => { setPostcode(e.target.value); setError('') }}
             placeholder="Enter postcode"
+            error={!!error}
+            helperText={error}
+            onKeyDown={(e) => { if (e.key === 'Enter') handleSearch() }}
             fullWidth
           />
-          <Button variant="outlined" aria-label="search" sx={{ '&:hover': { borderColor: 'rgb(209, 138, 0)' }, '&:focus': { outline: 'none' } }}>
+          <Button variant="outlined" aria-label="search" onClick={handleSearch} sx={{ '&:hover': { borderColor: 'rgb(209, 138, 0)' }, '&:focus': { outline: 'none' } }}>
             <SearchIcon />
           </Button>
         </Box>
